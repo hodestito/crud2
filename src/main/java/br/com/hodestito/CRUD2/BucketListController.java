@@ -3,6 +3,8 @@ package br.com.hodestito.CRUD2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
+
 import java.util.Optional;
 
 @RestController
@@ -12,6 +14,11 @@ public class BucketListController {
     BucketListRepository bucketListRepository;
 
     @GetMapping(value = "/")
+    public RedirectView hello() {
+        return new RedirectView("/index.html");
+    }
+    
+    @GetMapping(value = "/list")
     public ResponseEntity index() {
         return ResponseEntity.ok(bucketListRepository.findAll());
     }
