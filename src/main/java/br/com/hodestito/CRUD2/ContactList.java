@@ -13,25 +13,30 @@ public class ContactList {
     @Column(name = "name", length = 60, nullable = false)
     private String name;
 
-    @Column
-    private  String description;
+    @Column(name = "phone")
+    private String phone;
+    
+    @Column(name = "email")
+    private String email;
 
-    ContactList() {
+	ContactList() {
 
     }
 
-    ContactList(String name, String description){
+    public ContactList(long id, String name, String phone, String email) {
+		this.id = id;
+		this.name = name;
+		this.phone = phone;
+		this.email = email;
+	}
+    
+    ContactList(String name, String phone, String email){
         this.name = name;
-        this.description = description;
+        this.phone = phone;
+    	this.email = email;
     }
 
-    ContactList(long id, String name, String description){
-        this.id = id;
-        this.name = name;
-        this.description = description;
-    }
-
-    public long getId() {
+	public long getId() {
         return id;
     }
 
@@ -47,20 +52,29 @@ public class ContactList {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
+    
+    public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
     @Override
     public String toString() {
         return "ContactList{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

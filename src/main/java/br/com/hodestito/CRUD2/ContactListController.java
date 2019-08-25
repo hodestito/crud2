@@ -38,13 +38,13 @@ public class ContactListController {
 
     @SuppressWarnings("rawtypes")
 	@PostMapping(value = "/")
-    public ResponseEntity addToContactList(@RequestParam(value="name") String name, @RequestParam(value="description") String desc) {
-        return ResponseEntity.ok(contactListRepository.save(new ContactList(name, desc)));
+    public ResponseEntity addToContactList(@RequestParam(value="name") String name, @RequestParam(value="phone") String phone, @RequestParam(value="email") String email) {
+        return ResponseEntity.ok(contactListRepository.save(new ContactList(name, phone, email)));
     }
 
     @SuppressWarnings("rawtypes")
 	@PutMapping(value = "/")
-    public ResponseEntity updateContactList(@RequestParam(value="name") String name, @RequestParam(value="id") Long id, @RequestParam(value="description") String desc) {
+    public ResponseEntity updateContactList(@RequestParam(value="name") String name, @RequestParam(value="id") Long id, @RequestParam(value="phone") String phone,  @RequestParam(value="email") String email) {
         Optional<ContactList> optionalContactList = contactListRepository.findById(id);
         if(!optionalContactList.isPresent()){
             return ResponseEntity.badRequest().body("No contact with specified id " + id + " found");
@@ -52,7 +52,8 @@ public class ContactListController {
 
         ContactList foundContactList = optionalContactList.get();
         foundContactList.setName(name);
-        foundContactList.setDescription(desc);
+        foundContactList.setPhone(phone);
+        foundContactList.setEmail(email);
 
         return ResponseEntity.ok(contactListRepository.save(foundContactList));
     }
