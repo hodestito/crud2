@@ -3,7 +3,7 @@ package br.com.hodestito.CRUD2;
 import javax.persistence.*;
 
 @Entity
-public class BucketList {
+public class ContactList {
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -16,16 +16,16 @@ public class BucketList {
     @Column
     private  String description;
 
-    BucketList() {
+    ContactList() {
 
     }
 
-    BucketList(String name, String description){
+    ContactList(String name, String description){
         this.name = name;
         this.description = description;
     }
 
-    BucketList(long id, String name, String description){
+    ContactList(long id, String name, String description){
         this.id = id;
         this.name = name;
         this.description = description;
@@ -57,7 +57,7 @@ public class BucketList {
 
     @Override
     public String toString() {
-        return "BucketList{" +
+        return "ContactList{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
