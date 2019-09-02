@@ -23,6 +23,23 @@ public class ContactListController {
     }
     
     
+    //GET /users 
+    @CrossOrigin
+    @SuppressWarnings("rawtypes")
+	@GetMapping(value = "/users")
+    public ResponseEntity allUsers() {
+        return ResponseEntity.ok(userRepository.findAll());
+    }
+    
+    //GET /contacts 
+    @CrossOrigin
+    @SuppressWarnings("rawtypes")
+	@GetMapping(value = "/contacts")
+    public ResponseEntity allContacts() {
+        return ResponseEntity.ok(contactRepository.findAll());
+    }
+    
+    
     //GET /users/{uid}/contacts 
     @CrossOrigin
     @SuppressWarnings("rawtypes")

@@ -87,6 +87,7 @@ public class Contact {
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
+                ", user='" + user.getId() + '\'' +
                 '}';
     }
 }
