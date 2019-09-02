@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "a8285620-97f3-4dc3-bb7d-929d7e53a636",
+		"name": "CRUD2",
+		"description": "Requisições do CRUD2\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1 - Lista Usuarios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/users",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2 - Lista Contatos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/contacts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3 - Lista contatos por Usuario",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/users/1/contacts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"1",
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4 - Único contato por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/users/1/contacts/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"1",
+						"contacts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5 - Cria usuário",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"uid\": \"333\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/users",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6 - Cria contato",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Nome3\",\n\t\"phone\": \"phone3\",\n\t\"email\": \"email3\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/users/333/contact",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"333",
+						"contact"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7 - Atualiza contato",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Nome888\",\n\t\"phone\": \"Phone888\",\n\t\"email\": \"Email888\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/users/333/contacts/8",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"333",
+						"contacts",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8 - Apaga contato",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/users/333/contacts/8",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"333",
+						"contacts",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9 - Apaga usuário",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/users/333",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"333"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
