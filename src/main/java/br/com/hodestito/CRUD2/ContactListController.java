@@ -67,8 +67,8 @@ public class ContactListController {
     @CrossOrigin
     @SuppressWarnings("rawtypes")
 	@PostMapping(value = "/users")
-    public ResponseEntity addToUsers(@RequestBody String uid) {
-        return ResponseEntity.ok(userRepository.save(new User(uid)));
+    public ResponseEntity addToUsers(@RequestBody User user) {
+        return ResponseEntity.ok(userRepository.save(user));
     }    
     
     //POST /users/{uid}/contact    body: {"name": "x", "phone": "y", "email": "z"} 
@@ -86,8 +86,8 @@ public class ContactListController {
     @CrossOrigin
     @SuppressWarnings("rawtypes")
 	@PutMapping(value = "/users/{uid}/contacts/{id}")
-    public ResponseEntity updateContactList(@PathVariable String uid, @RequestBody Contact contact) {
-        Optional<Contact> optionalContactList = contactRepository.findById(contact.getId());
+    public ResponseEntity updateContactList(@PathVariable String uid, @PathVariable Long id, @RequestBody Contact contact) {
+        Optional<Contact> optionalContactList = contactRepository.findById(id);
         if(!optionalContactList.isPresent()){
             return ResponseEntity.badRequest().body("No contact with specified id " + contact.getId() + " found");
         }
