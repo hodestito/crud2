@@ -11,23 +11,33 @@ import java.util.Optional;
 public class ContactListController {
 
     @Autowired
-    ContactListRepository contactListRepository;
+    ContactRepository contactRepository;
+    
+    @Autowired
+    UserRepository userRepository;
 
+    @CrossOrigin
     @GetMapping(value = "/")
     public RedirectView hello() {
         return new RedirectView("/index.html");
     }
     
+    
+    //GET /users/{uid}/contacts 
+    @CrossOrigin
     @SuppressWarnings("rawtypes")
-	@GetMapping(value = "/list")
-    public ResponseEntity index() {
-        return ResponseEntity.ok(contactListRepository.findAll());
+	@GetMapping(value = "/users/{uid}/contacts")
+    public ResponseEntity index(@PathVariable String uid) {
+    	User user = userRepository.findByUid(uid);
+        return ResponseEntity.ok(contactRepository.findAllContactsByUser(user));
     }
 
+    //GET /users/{uid}/contact/{id}
+    @CrossOrigin
     @SuppressWarnings("rawtypes")
-	@GetMapping(value = "/contact")
-    public ResponseEntity getContact(@RequestParam(value="id") Long id) {
-        Optional<ContactList> foundContactList = contactListRepository.findById(id);
+	@GetMapping(value = "/users/{uid}/contacts/{id}")
+    public ResponseEntity getContact(@PathVariable String uid, @PathVariable Long id) {
+        Optional<Contact> foundContactList = contactRepository.findById(id);
 
         if(foundContactList.isPresent()){
             return ResponseEntity.ok(foundContactList.get());
@@ -36,32 +46,58 @@ public class ContactListController {
         }
     }
 
+    //POST /users/    body: {"uid": "xxxx"} 
+    @CrossOrigin
     @SuppressWarnings("rawtypes")
-	@PostMapping(value = "/")
-    public ResponseEntity addToContactList(@RequestParam(value="name") String name, @RequestParam(value="phone") String phone, @RequestParam(value="email") String email) {
-        return ResponseEntity.ok(contactListRepository.save(new ContactList(name, phone, email)));
+	@PostMapping(value = "/users")
+    public ResponseEntity addToUsers(@RequestBody String uid) {
+        return ResponseEntity.ok(userRepository.save(new User(uid)));
+    }    
+    
+    //POST /users/{uid}/contact    body: {"name": "x", "phone": "y", "email": "z"} 
+    @CrossOrigin
+    @SuppressWarnings("rawtypes")
+	@PostMapping(value = "/users/{uid}/contact")
+    public ResponseEntity addToContactList(@PathVariable String uid, @RequestBody Contact contact) {
+    	User user = userRepository.findByUid(uid);
+    	contact.setUser(user);
+        return ResponseEntity.ok(contactRepository.save(contact));
     }
 
+    
+    //PUT /users/{uid}/contact/{id}     body: {"name": "x", "phone": "y", "email": "z"} 
+    @CrossOrigin
     @SuppressWarnings("rawtypes")
-	@PutMapping(value = "/")
-    public ResponseEntity updateContactList(@RequestParam(value="name") String name, @RequestParam(value="id") Long id, @RequestParam(value="phone") String phone,  @RequestParam(value="email") String email) {
-        Optional<ContactList> optionalContactList = contactListRepository.findById(id);
+	@PutMapping(value = "/users/{uid}/contacts/{id}")
+    public ResponseEntity updateContactList(@PathVariable String uid, @RequestBody Contact contact) {
+        Optional<Contact> optionalContactList = contactRepository.findById(contact.getId());
         if(!optionalContactList.isPresent()){
-            return ResponseEntity.badRequest().body("No contact with specified id " + id + " found");
+            return ResponseEntity.badRequest().body("No contact with specified id " + contact.getId() + " found");
         }
 
-        ContactList foundContactList = optionalContactList.get();
-        foundContactList.setName(name);
-        foundContactList.setPhone(phone);
-        foundContactList.setEmail(email);
+        Contact foundContactList = optionalContactList.get();
+        foundContactList.setName(contact.getName());
+        foundContactList.setPhone(contact.getPhone());
+        foundContactList.setEmail(contact.getEmail());
 
-        return ResponseEntity.ok(contactListRepository.save(foundContactList));
+        return ResponseEntity.ok(contactRepository.save(foundContactList));
     }
 
+    //DELETE /users/{uid}
+    @CrossOrigin
     @SuppressWarnings("rawtypes")
-	@DeleteMapping(value = "/")
-    public ResponseEntity removeContactList(@RequestParam(value="id") Long id) {
-        contactListRepository.deleteById(id);
+	@DeleteMapping(value = "/users/{uid}")
+    public ResponseEntity removeUser(@PathVariable String uid) {
+        userRepository.deleteByUid(uid);
+        return ResponseEntity.noContent().build();
+    }
+    
+    //DELETE /users/{uid}/contact/{id}
+    @CrossOrigin
+    @SuppressWarnings("rawtypes")
+	@DeleteMapping(value = "/users/{uid}/contacts/{id}")
+    public ResponseEntity removeContactList(@PathVariable String uid, @PathVariable Long id) {
+        contactRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }

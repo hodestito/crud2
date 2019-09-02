@@ -3,7 +3,7 @@ package br.com.hodestito.CRUD2;
 import javax.persistence.*;
 
 @Entity
-public class ContactList {
+public class Contact {
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -18,19 +18,23 @@ public class ContactList {
     
     @Column(name = "email")
     private String email;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-	ContactList() {
+	Contact() {
 
     }
 
-    public ContactList(long id, String name, String phone, String email) {
+    public Contact(long id, String name, String phone, String email) {
 		this.id = id;
 		this.name = name;
 		this.phone = phone;
 		this.email = email;
 	}
     
-    ContactList(String name, String phone, String email){
+    public Contact(String name, String phone, String email){
         this.name = name;
         this.phone = phone;
     	this.email = email;
@@ -68,7 +72,15 @@ public class ContactList {
 		this.email = email;
 	}
 
-    @Override
+//    public User getUser() {
+//		return user;
+//	}
+//
+ 	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@Override
     public String toString() {
         return "ContactList{" +
                 "id=" + id +
