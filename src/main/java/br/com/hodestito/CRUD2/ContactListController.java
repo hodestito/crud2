@@ -39,6 +39,13 @@ public class ContactListController {
         return ResponseEntity.ok(contactRepository.findAll());
     }
     
+    //GET /users/{uid}
+    @CrossOrigin
+    @SuppressWarnings("rawtypes")
+	@GetMapping(value = "/users/{uid}")
+    public ResponseEntity findUser(@PathVariable String uid) {
+        return ResponseEntity.ok(userRepository.findByUid(uid));
+    }    
     
     //GET /users/{uid}/contacts 
     @CrossOrigin
